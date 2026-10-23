@@ -25,6 +25,17 @@ def create_user(name, email, password_hash):
         conn.commit()
         return cursor.lastrowid
 
+def get_user_by_email(email):
+    """
+    Fetches a user by their email address.
+    Returns the user record as a sqlite3.Row if found, otherwise None.
+    """
+    with get_db() as conn:
+        return conn.execute(
+            "SELECT * FROM users WHERE email = ?",
+            (email,)
+        ).fetchone()
+
 def init_db():
     """Creates all tables using CREATE TABLE IF NOT EXISTS."""
     with get_db() as conn:
