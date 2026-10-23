@@ -96,7 +96,43 @@ def profile():
     if "user_id" not in session:
         flash("Please log in to access your profile.", "error")
         return redirect(url_for("login"))
-    return render_template("profile.html")
+
+    # Hardcoded data for UI validation (Step 4)
+    user_data = {
+        "name": session.get("user_name", "Vansh Slathia"),
+        "initials": "VS",
+        "email": "vansh@example.com",
+        "member_since": "October 2023"
+    }
+
+    stats_data = {
+        "total_spent": "12,450",
+        "tx_count": 42,
+        "top_category": "Food"
+    }
+
+    transactions_data = [
+        {"date": "2023-10-20", "desc": "Starbucks Coffee", "cat": "Food", "cat_slug": "food", "amount": "450"},
+        {"date": "2023-10-19", "desc": "Uber Ride", "cat": "Transport", "cat_slug": "transport", "amount": "220"},
+        {"date": "2023-10-18", "desc": "Amazon Shopping", "cat": "Shopping", "cat_slug": "shopping", "amount": "1,200"},
+        {"date": "2023-10-17", "desc": "Electricity Bill", "cat": "Bills", "cat_slug": "bills", "amount": "3,100"},
+    ]
+
+    categories_data = [
+        {"name": "Food", "amount": "4,200", "percentage": 34},
+        {"name": "Transport", "amount": "2,100", "percentage": 17},
+        {"name": "Shopping", "amount": "3,500", "percentage": 28},
+        {"name": "Bills", "amount": "2,650", "percentage": 21},
+    ]
+
+    return render_template(
+        "profile.html",
+        user=user_data,
+        stats=stats_data,
+        transactions=transactions_data,
+        categories=categories_data
+    )
+
 
 
 @app.route("/expenses/add")
